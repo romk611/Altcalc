@@ -59,56 +59,68 @@ class DataReader {
 
     public void proverka(String text) throws Exception {
 
-
+        int count = 0;
+        int b1;
+        int b2;
         if (text.contains("+")) {
-            int count = 0;
             String[] block = text.split("\\+");
+            b1 = block[0].replace("\"", "").trim().length();
+            b2 = block[1].replace("\"", "").trim().length();
+            if (b1 > 10 || b2 > 10) {
+                throw new Exception("Длина строки не должна превышать 10 символов");
+            }
             for (char element : text.toCharArray()) {
                 if (element == '\"') count++;
             }
             if (count != 4) {
                 throw new Exception("При сложнии складываются только строки");
             }
-        }
-        else if (text.contains("-")) {
-            int count = 0;
+        } else if (text.contains("-")) {
             String[] block = text.split("\\-");
+            b1 = block[0].replace("\"", "").trim().length();
+            b2 = block[1].replace("\"", "").trim().length();
+            if (b1 > 10 || b2 > 10) {
+                throw new Exception("Длина строки не должна превышать 10 символов");
+            }
             for (char element : text.toCharArray()) {
                 if (element == '\"') count++;
             }
             if (count != 4) {
                 throw new Exception("При вычитании отнимаются только строки");
             }
-        }
-        else if (text.contains("*")) {
-            int count = 0;
+        } else if (text.contains("*")) {
             String[] block = text.split("\\* ");
             int a = Integer.parseInt(block[1]);
+            b1 = block[0].replace("\"", "").trim().length();
+            if (b1 > 10) {
+                throw new Exception("Длина строки не должна превышать 10 символов");
+            }
             for (char element : block[0].toCharArray()) {
                 if (element == '\"') count++;
             }
-            if (count!=2){
-                 throw new Exception("Первым всегда должна быть строка");
-            }
-            if (a > 10 || a < 1) {
-                throw new Exception("Число от 1 до 10");
-            }
-        }
-        else if(text.contains("/")) {
-            int count = 0;
-            String[] block = text.split("\\/ ");
-            int a = Integer.parseInt(block[1]);
-            for (char element : block[0].toCharArray()) {
-                if (element == '\"') count++;
-            }
-            if (count!=2){
+            if (count != 2) {
                 throw new Exception("Первым всегда должна быть строка");
             }
             if (a > 10 || a < 1) {
                 throw new Exception("Число от 1 до 10");
             }
-        }
-        else {
+        } else if (text.contains("/")) {
+            String[] block = text.split("\\/ ");
+            int a = Integer.parseInt(block[1]);
+            b1 = block[0].replace("\"", "").trim().length();
+            if (b1 > 10) {
+                throw new Exception("Длина строки не должна превышать 10 символов");
+            }
+            for (char element : block[0].toCharArray()) {
+                if (element == '\"') count++;
+            }
+            if (count != 2) {
+                throw new Exception("Первым всегда должна быть строка");
+            }
+            if (a > 10 || a < 1) {
+                throw new Exception("Число от 1 до 10");
+            }
+        } else {
             throw new Exception("Нет подходящего арифметического знака");
         }
     }
