@@ -15,7 +15,7 @@ public class Main { //основной
         String res = sum.calc(text);
 
         if (res.length() > 40) {
-            System.out.println("...");
+            System.out.println("\"" + res.substring(0, 40) + "..." + "\"");
         } else {
             System.out.println("\"" + res + "\"");
         }
@@ -28,25 +28,27 @@ class Calculator {
         char operation = 0;
         String res = null;
         String text2 = text.replace("\"", "");
-        String[] blocks = text2.split(" ");
 
         if (text2.contains("+")) {
-            res = blocks[0].concat(blocks[2]);
+            String[] blocks = text2.split("\\+");
+            res = blocks[0].trim().concat(blocks[1].trim());
         } else if (text2.contains("-")) {
-            String[] bloc = text2.split(" - ");
+            String[] blocks = text2.split("\\-");
 
-            int index = bloc[0].indexOf(bloc[1]);
+            int index = blocks[0].trim().indexOf(blocks[1].trim());
             if (index == -1) {
-                res = bloc[0];
+                res = blocks[0].trim();
             } else {
-                res = bloc[0].replaceAll(bloc[1], "");
+                res = blocks[0].trim().replaceAll(blocks[1].trim(), "");
 
             }
         } else if (text2.contains("*")) {
-            int number = Integer.parseInt(blocks[2]);
-            res = blocks[0].repeat(number);
+            String[] blocks = text2.split("\\*");
+            int number = Integer.parseInt(blocks[1].trim());
+            res = blocks[0].trim().repeat(number);
         } else if (text2.contains("/")) {
-            int number = Integer.parseInt(blocks[2]);
+            String[] blocks = text2.split(" / ");
+            int number = Integer.parseInt(blocks[1]);
             int delitel = blocks[0].length() / number;
             res = blocks[0].substring(0, delitel);
         }
